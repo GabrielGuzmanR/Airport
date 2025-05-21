@@ -18,7 +18,7 @@ public class Passenger_Controller {
         storage.addPassenger(passenger);
     }
 
-    public Passenger getPassenger(Long id) {
+    public Passenger getPassenger(long id) {
         Passenger passenger = storage.getPassengerById(id);
         if (passenger == null) {
             throw new IllegalArgumentException("El pasajero con el ID especificado no existe.");
@@ -30,14 +30,14 @@ public class Passenger_Controller {
         return storage.getAllPassengers();
     }
 
-    public void updatePassenger(Passenger updated) {
-        if (!storage.existsPassenger(updated.getId())) {
+    public void updatePassenger(Passenger passenger) {
+        if (!storage.existsPassenger(passenger.getId())) {
             throw new IllegalArgumentException("El pasajero con el ID especificado no existe.");
         }
-        storage.updatePassenger(updated);
+        storage.updatePassenger(passenger);
     }
 
-    public void removePassenger(Long id) {
+    public void removePassenger(long id) {
         if (!storage.existsPassenger(id)) {
             throw new IllegalArgumentException("El pasajero con el ID especificado no existe.");
         }

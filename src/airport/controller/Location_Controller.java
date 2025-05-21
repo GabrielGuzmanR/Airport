@@ -11,8 +11,9 @@ public class Location_Controller {
         this.storage = storage;
     }
 
-    public void createLocation(Location location) {
-        if (storage.existsLocation(location.getAirportId())) {
+    public void createLocation(String id, String name, String city, String country, double latitude, double longitude) {
+        Location location = new Location(id, name, city, country, latitude, longitude);
+        if (storage.existsLocation(id)) {
             throw new IllegalArgumentException("Ya existe una ubicación con ese ID.");
         }
         storage.addLocation(location);

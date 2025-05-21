@@ -4,10 +4,10 @@ import airport.model.Flight;
 import java.util.List;
 
 public interface StorageFlight {
-    void addFlight(Flight flight);
+    void addFlight(Flight f);
+    boolean existsFlight(String id);
     Flight getFlightById(String id);
     List<Flight> getAllFlights();
-    void updateFlight(Flight flight);
+    void updateFlight(Flight f);
     void removeFlight(String id);
-    boolean existsFlight(String id);
 }

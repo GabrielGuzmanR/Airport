@@ -11,10 +11,11 @@ public class Plane_Controller {
         this.storage = storage;
     }
 
-    public void createPlane(Plane plane) {
-        if (storage.existsPlane(plane.getId())) {
+    public void createPlane(String id, String brand, String model, int maxCapacity, String airline) {
+        if (storage.existsPlane(id)) {
             throw new IllegalArgumentException("Ya existe un avión con ese ID.");
         }
+        Plane plane = new Plane(id, brand, model, maxCapacity, airline);
         storage.addPlane(plane);
     }
 

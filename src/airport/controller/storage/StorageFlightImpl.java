@@ -1,51 +1,48 @@
 package airport.controller.storage;
 
 import airport.model.Flight;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StorageFlightImpl implements StorageFlight {
-    private final Map<String, Flight> flightMap = new HashMap<>();
+    private final List<Flight> flights;
 
-    @Override
-    public void addFlight(Flight flight) {
-        if (flightMap.containsKey(flight.getId())) {
-            throw new IllegalArgumentException("Flight ID must be unique");
-        }
-        flightMap.put(flight.getId(), flight);
+    public StorageFlightImpl(List<Flight> flights) {
+        this.flights = new ArrayList<>(flights);
     }
 
     @Override
-    public Flight getFlightById(String id) {
-        Flight flight = flightMap.get(id);
-        return (flight != null) ? flight.clone() : null;
-    }
-
-    @Override
-    public List<Flight> getAllFlights() {
-        List<Flight> flights = new ArrayList<>();
-        for (Flight f : flightMap.values()) {
-            flights.add(f.clone());
-        }
-        // Optional: Sort by departure date
-        flights.sort(Comparator.comparing(Flight::getDepartureDate));
-        return flights;
-    }
-
-    @Override
-    public void updateFlight(Flight flight) {
-        if (!flightMap.containsKey(flight.getId())) {
-            throw new IllegalArgumentException("Flight does not exist");
-        }
-        flightMap.put(flight.getId(), flight);
-    }
-
-    @Override
-    public void removeFlight(String id) {
-        flightMap.remove(id);
+    public void addFlight(Flight f) {
+        flights.add(f);
     }
 
     @Override
     public boolean existsFlight(String id) {
-        return flightMap.containsKey(id);
+        return flights.stream().anyMatch(f -> f.getId().equals(id));
+    }
+
+    @Override
+    public Flight getFlightById(String id) {
+        return flights.stream().filter(f -> f.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Flight> getAllFlights() {
+        return new ArrayList<>(flights);
+    }
+
+    @Override
+    public void updateFlight(Flight updated) {
+        for (int i = 0; i < flights.size(); i++) {
+            if (flights.get(i).getId().equals(updated.getId())) {
+                flights.set(i, updated);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void removeFlight(String id) {
+        flights.removeIf(f -> f.getId().equals(id));
     }
 }

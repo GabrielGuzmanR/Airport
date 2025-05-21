@@ -1,50 +1,48 @@
 package airport.controller.storage;
 
 import airport.model.Passenger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StoragePassengerImpl implements StoragePassenger {
-    private final Map<Long, Passenger> passengerMap = new HashMap<>();
+    private final List<Passenger> passengers;
 
-    @Override
-    public void addPassenger(Passenger passenger) {
-        if (passengerMap.containsKey(passenger.getId())) {
-            throw new IllegalArgumentException("Passenger ID must be unique");
-        }
-        passengerMap.put(passenger.getId(), passenger);
+    public StoragePassengerImpl(List<Passenger> passengers) {
+        this.passengers = new ArrayList<>(passengers);
     }
 
     @Override
-    public Passenger getPassengerById(long id) {
-        Passenger p = passengerMap.get(id);
-        return (p != null) ? p.clone() : null;
-    }
-
-    @Override
-    public List<Passenger> getAllPassengers() {
-        List<Passenger> list = new ArrayList<>();
-        for (Passenger p : passengerMap.values()) {
-            list.add(p.clone());
-        }
-        list.sort(Comparator.comparingLong(Passenger::getId));
-        return list;
-    }
-
-    @Override
-    public void updatePassenger(Passenger passenger) {
-        if (!passengerMap.containsKey(passenger.getId())) {
-            throw new IllegalArgumentException("Passenger does not exist");
-        }
-        passengerMap.put(passenger.getId(), passenger);
-    }
-
-    @Override
-    public void removePassenger(long id) {
-        passengerMap.remove(id);
+    public void addPassenger(Passenger p) {
+        passengers.add(p);
     }
 
     @Override
     public boolean existsPassenger(long id) {
-        return passengerMap.containsKey(id);
+        return passengers.stream().anyMatch(p -> p.getId() == id);
+    }
+
+    @Override
+    public Passenger getPassengerById(long id) {
+        return passengers.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Passenger> getAllPassengers() {
+        return new ArrayList<>(passengers);
+    }
+
+    @Override
+    public void updatePassenger(Passenger updated) {
+        for (int i = 0; i < passengers.size(); i++) {
+            if (passengers.get(i).getId() == updated.getId()) {
+                passengers.set(i, updated);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void removePassenger(long id) {
+        passengers.removeIf(p -> p.getId() == id);
     }
 }

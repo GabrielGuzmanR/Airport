@@ -1,50 +1,48 @@
 package airport.controller.storage;
 
 import airport.model.Plane;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StoragePlaneImpl implements StoragePlane {
-    private final Map<String, Plane> planeMap = new HashMap<>();
+    private final List<Plane> planes;
 
-    @Override
-    public void addPlane(Plane plane) {
-        if (planeMap.containsKey(plane.getId())) {
-            throw new IllegalArgumentException("Plane ID must be unique");
-        }
-        planeMap.put(plane.getId(), plane);
+    public StoragePlaneImpl(List<Plane> planes) {
+        this.planes = new ArrayList<>(planes);
     }
 
     @Override
-    public Plane getPlaneById(String id) {
-        Plane p = planeMap.get(id);
-        return (p != null) ? p.clone() : null;
-    }
-
-    @Override
-    public List<Plane> getAllPlanes() {
-        List<Plane> planes = new ArrayList<>();
-        for (Plane p : planeMap.values()) {
-            planes.add(p.clone());
-        }
-        planes.sort(Comparator.comparing(Plane::getId));
-        return planes;
-    }
-
-    @Override
-    public void updatePlane(Plane plane) {
-        if (!planeMap.containsKey(plane.getId())) {
-            throw new IllegalArgumentException("Plane does not exist");
-        }
-        planeMap.put(plane.getId(), plane);
-    }
-
-    @Override
-    public void removePlane(String id) {
-        planeMap.remove(id);
+    public void addPlane(Plane p) {
+        planes.add(p);
     }
 
     @Override
     public boolean existsPlane(String id) {
-        return planeMap.containsKey(id);
+        return planes.stream().anyMatch(p -> p.getId().equals(id));
+    }
+
+    @Override
+    public Plane getPlaneById(String id) {
+        return planes.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Plane> getAllPlanes() {
+        return new ArrayList<>(planes);
+    }
+
+    @Override
+    public void updatePlane(Plane updated) {
+        for (int i = 0; i < planes.size(); i++) {
+            if (planes.get(i).getId().equals(updated.getId())) {
+                planes.set(i, updated);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void removePlane(String id) {
+        planes.removeIf(p -> p.getId().equals(id));
     }
 }
