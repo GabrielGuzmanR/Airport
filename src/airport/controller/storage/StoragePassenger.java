@@ -1,13 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package airport.controller.storage;
 
-/**
- *
- * @author Sebastian
- */
-public class StoragePassenger {
-    
+import airport.model.Passenger;
+import java.util.List;
+
+public interface StoragePassenger {
+    void addPassenger(Passenger passenger);
+    Passenger getPassengerById(long id);
+    List<Passenger> getAllPassengers();
+    void updatePassenger(Passenger passenger);
+    void removePassenger(long id);
+    boolean existsPassenger(long id);
 }

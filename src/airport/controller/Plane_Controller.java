@@ -1,13 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package airport.controller;
 
-/**
- *
- * @author Sebastian
- */
+import airport.model.Plane;
+import airport.controller.storage.StoragePlane;
+import java.util.List;
+
 public class Plane_Controller {
-    
+    private final StoragePlane storage;
+
+    public Plane_Controller(StoragePlane storage) {
+        this.storage = storage;
+    }
+
+    public void createPlane(Plane plane) {
+        if (storage.existsPlane(plane.getId())) {
+            throw new IllegalArgumentException("Ya existe un avión con ese ID.");
+        }
+        storage.addPlane(plane);
+    }
+
+    public Plane getPlane(String id) {
+        Plane plane = storage.getPlaneById(id);
+        if (plane == null) {
+            throw new IllegalArgumentException("El avión con el ID especificado no existe.");
+        }
+        return plane;
+    }
+
+    public List<Plane> getAllPlanes() {
+        return storage.getAllPlanes();
+    }
+
+    public void updatePlane(Plane updated) {
+        if (!storage.existsPlane(updated.getId())) {
+            throw new IllegalArgumentException("El avión con el ID especificado no existe.");
+        }
+        storage.updatePlane(updated);
+    }
+
+    public void removePlane(String id) {
+        if (!storage.existsPlane(id)) {
+            throw new IllegalArgumentException("El avión con el ID especificado no existe.");
+        }
+        storage.removePlane(id);
+    }
 }

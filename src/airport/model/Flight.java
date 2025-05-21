@@ -1,18 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package airport.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
-/**
- *
- * @author edangulo
- */
-public class Flight {
-    
+public class Flight implements Cloneable {
+
     private final String id;
     private ArrayList<Passenger> passengers;
     private Plane plane;
@@ -24,22 +17,26 @@ public class Flight {
     private int minutesDurationArrival;
     private int hoursDurationScale;
     private int minutesDurationScale;
-    
 
+    // Constructor sin escala
     public Flight(String id, Plane plane, Location departureLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival) {
-        this.id = id;
-        this.passengers = new ArrayList<>();
-        this.plane = plane;
-        this.departureLocation = departureLocation;
-        this.arrivalLocation = arrivalLocation;
-        this.departureDate = departureDate;
-        this.hoursDurationArrival = hoursDurationArrival;
-        this.minutesDurationArrival = minutesDurationArrival;
-        
-        this.plane.addFlight(this);
+        this(id, plane, departureLocation, null, arrivalLocation, departureDate, hoursDurationArrival, minutesDurationArrival, 0, 0);
     }
 
-    public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
+    // Constructor con escala
+    public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate,
+                  int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
+        validateId(id);
+        validateNotNull(plane, "Plane");
+        validateNotNull(departureLocation, "Departure location");
+        validateNotNull(arrivalLocation, "Arrival location");
+        validateNotNull(departureDate, "Departure date");
+        validateDuration(hoursDurationArrival, minutesDurationArrival, "flight duration");
+        if (scaleLocation == null && (hoursDurationScale != 0 || minutesDurationScale != 0))
+            throw new IllegalArgumentException("If scale location is null, scale time must be 0");
+        if (scaleLocation != null)
+            validateDuration(hoursDurationScale, minutesDurationScale, "scale duration");
+
         this.id = id;
         this.passengers = new ArrayList<>();
         this.plane = plane;
@@ -51,68 +48,85 @@ public class Flight {
         this.minutesDurationArrival = minutesDurationArrival;
         this.hoursDurationScale = hoursDurationScale;
         this.minutesDurationScale = minutesDurationScale;
-        
+
         this.plane.addFlight(this);
     }
-    
+
+    private void validateId(String id) {
+        if (id == null || !id.matches("^[A-Z]{3}\\d{3}$")) {
+            throw new IllegalArgumentException("Flight id must match format XXXYYY (3 uppercase letters + 3 digits)");
+        }
+    }
+    private void validateNotNull(Object o, String name) {
+        if (o == null) throw new IllegalArgumentException(name + " cannot be null");
+    }
+    private void validateDuration(int hours, int minutes, String field) {
+        if (hours < 0 || minutes < 0 || (hours == 0 && minutes == 0))
+            throw new IllegalArgumentException("The " + field + " must be greater than 00:00");
+    }
+
     public void addPassenger(Passenger passenger) {
-        this.passengers.add(passenger);
-    }
-    
-    public String getId() {
-        return id;
-    }
-
-    public Location getDepartureLocation() {
-        return departureLocation;
+        if (passenger == null)
+            throw new IllegalArgumentException("Passenger cannot be null");
+        if (!passengers.contains(passenger)) {
+            passengers.add(passenger);
+        }
     }
 
-    public Location getScaleLocation() {
-        return scaleLocation;
-    }
-
-    public Location getArrivalLocation() {
-        return arrivalLocation;
-    }
-
-    public LocalDateTime getDepartureDate() {
-        return departureDate;
-    }
-
-    public int getHoursDurationArrival() {
-        return hoursDurationArrival;
-    }
-
-    public int getMinutesDurationArrival() {
-        return minutesDurationArrival;
-    }
-
-    public int getHoursDurationScale() {
-        return hoursDurationScale;
-    }
-
-    public int getMinutesDurationScale() {
-        return minutesDurationScale;
-    }
-
-    public Plane getPlane() {
-        return plane;
-    }
+    public String getId() { return id; }
+    public Location getDepartureLocation() { return departureLocation; }
+    public Location getScaleLocation() { return scaleLocation; }
+    public Location getArrivalLocation() { return arrivalLocation; }
+    public LocalDateTime getDepartureDate() { return departureDate; }
+    public int getHoursDurationArrival() { return hoursDurationArrival; }
+    public int getMinutesDurationArrival() { return minutesDurationArrival; }
+    public int getHoursDurationScale() { return hoursDurationScale; }
+    public int getMinutesDurationScale() { return minutesDurationScale; }
+    public Plane getPlane() { return plane; }
+    public ArrayList<Passenger> getPassengers() { return new ArrayList<>(passengers); }
+    public int getNumPassengers() { return passengers.size(); }
 
     public void setDepartureDate(LocalDateTime departureDate) {
+        validateNotNull(departureDate, "Departure date");
         this.departureDate = departureDate;
     }
-    
+
     public LocalDateTime calculateArrivalDate() {
-        return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
+        return departureDate
+            .plusHours(hoursDurationScale)
+            .plusHours(hoursDurationArrival)
+            .plusMinutes(minutesDurationScale)
+            .plusMinutes(minutesDurationArrival);
     }
-    
+
     public void delay(int hours, int minutes) {
+        if (hours < 0 || minutes < 0 || (hours == 0 && minutes == 0))
+            throw new IllegalArgumentException("Delay time must be greater than 00:00");
         this.departureDate = this.departureDate.plusHours(hours).plusMinutes(minutes);
     }
-    
-    public int getNumPassengers() {
-        return passengers.size();
+
+    // Prototype Pattern
+    @Override
+    public Flight clone() {
+        try {
+            Flight copy = (Flight) super.clone();
+            copy.passengers = new ArrayList<>(this.passengers);
+            // Plane/Location assumed immutable or managed elsewhere
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Flight)) return false;
+        Flight flight = (Flight) o;
+        return id.equals(flight.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

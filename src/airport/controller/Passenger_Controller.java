@@ -1,15 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package airport.controller;
 
-/**
- *
- * @author Sebastian
- */
-public class Passenger_Controller {
+import airport.model.Passenger;
+import airport.controller.storage.StoragePassenger;
+import java.util.List;
 
-    
-    
+public class Passenger_Controller {
+    private final StoragePassenger storage;
+
+    public Passenger_Controller(StoragePassenger storage) {
+        this.storage = storage;
+    }
+
+    public void createPassenger(Passenger passenger) {
+        if (storage.existsPassenger(passenger.getId())) {
+            throw new IllegalArgumentException("Ya existe un pasajero con ese ID.");
+        }
+        storage.addPassenger(passenger);
+    }
+
+    public Passenger getPassenger(Long id) {
+        Passenger passenger = storage.getPassengerById(id);
+        if (passenger == null) {
+            throw new IllegalArgumentException("El pasajero con el ID especificado no existe.");
+        }
+        return passenger;
+    }
+
+    public List<Passenger> getAllPassengers() {
+        return storage.getAllPassengers();
+    }
+
+    public void updatePassenger(Passenger updated) {
+        if (!storage.existsPassenger(updated.getId())) {
+            throw new IllegalArgumentException("El pasajero con el ID especificado no existe.");
+        }
+        storage.updatePassenger(updated);
+    }
+
+    public void removePassenger(Long id) {
+        if (!storage.existsPassenger(id)) {
+            throw new IllegalArgumentException("El pasajero con el ID especificado no existe.");
+        }
+        storage.removePassenger(id);
+    }
 }
