@@ -1,9 +1,10 @@
 package airport.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Plane implements Cloneable {
+public class Plane implements InterPlane, Cloneable {
 
     private final String id;
     private String brand;
@@ -45,6 +46,7 @@ public class Plane implements Cloneable {
         }
     }
 
+    @Override
     public void addFlight(Flight flight) {
         if (flight == null) throw new IllegalArgumentException("Flight cannot be null");
         if (!flights.contains(flight)) {
@@ -52,28 +54,48 @@ public class Plane implements Cloneable {
         }
     }
 
+    @Override
     public String getId() {
         return id;
     }
+
+    // No está en la interfaz IPlane, pero se mantiene para compatibilidad
     public String getBrand() {
         return brand;
     }
+
+    @Override
     public String getModel() {
         return model;
     }
+
+    // La interfaz usa getCapacity(), pero la clase tiene getMaxCapacity()
+    @Override
+    public int getCapacity() {
+        return maxCapacity;
+    }
+
+    // Mantenemos el método original para compatibilidad
     public int getMaxCapacity() {
         return maxCapacity;
     }
+
+    @Override
     public String getAirline() {
         return airline;
     }
-    public ArrayList<Flight> getFlights() {
+
+    @Override
+    public List<Flight> getFlights() {
         return new ArrayList<>(flights);
     }
+
+    // No está en la interfaz, pero se mantiene para compatibilidad
     public int getNumFlights() {
         return flights.size();
     }
 
+    // Métodos setter que no están en la interfaz pero se mantienen para compatibilidad
     public void setBrand(String brand) { validateString(brand, "brand"); this.brand = brand; }
     public void setModel(String model) { validateString(model, "model"); this.model = model; }
     public void setAirline(String airline) { validateString(airline, "airline"); this.airline = airline; }

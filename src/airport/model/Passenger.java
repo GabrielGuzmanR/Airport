@@ -5,7 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Passenger implements Cloneable {
+public class Passenger implements InterPassenger, Cloneable {
     private final long id;
     private String firstname;
     private String lastname;
@@ -34,6 +34,7 @@ public class Passenger implements Cloneable {
         this.flights = new ArrayList<>();
     }
 
+    @Override
     public void addFlight(Flight flight) {
         if (flight == null) throw new IllegalArgumentException("Flight cannot be null");
         if (!flights.contains(flight)) {
@@ -68,25 +69,76 @@ public class Passenger implements Cloneable {
     }
 
     // Getters & setters with validation
+    @Override
     public long getId() { return id; }
+    
+    @Override
     public String getFirstname() { return firstname; }
+    
+    @Override
     public String getLastname() { return lastname; }
+    
+    @Override
     public LocalDate getBirthDate() { return birthDate; }
+    
+    @Override
     public int getCountryPhoneCode() { return countryPhoneCode; }
+    
+    @Override
     public long getPhone() { return phone; }
+    
+    @Override
     public String getCountry() { return country; }
+    
+    @Override
     public ArrayList<Flight> getFlights() { return new ArrayList<>(flights); }
 
-    public void setFirstname(String firstname) { validateString(firstname, "firstname"); this.firstname = firstname; }
-    public void setLastname(String lastname) { validateString(lastname, "lastname"); this.lastname = lastname; }
-    public void setBirthDate(LocalDate birthDate) { validateBirthDate(birthDate); this.birthDate = birthDate; }
-    public void setCountryPhoneCode(int countryPhoneCode) { validateCountryPhoneCode(countryPhoneCode); this.countryPhoneCode = countryPhoneCode; }
-    public void setPhone(long phone) { validatePhone(phone); this.phone = phone; }
-    public void setCountry(String country) { validateString(country, "country"); this.country = country; }
+    @Override
+    public void setFirstname(String firstname) { 
+        validateString(firstname, "firstname"); 
+        this.firstname = firstname; 
+    }
+    
+    @Override
+    public void setLastname(String lastname) { 
+        validateString(lastname, "lastname"); 
+        this.lastname = lastname; 
+    }
+    
+    @Override
+    public void setBirthDate(LocalDate birthDate) { 
+        validateBirthDate(birthDate); 
+        this.birthDate = birthDate; 
+    }
+    
+    @Override
+    public void setCountryPhoneCode(int countryPhoneCode) { 
+        validateCountryPhoneCode(countryPhoneCode); 
+        this.countryPhoneCode = countryPhoneCode; 
+    }
+    
+    @Override
+    public void setPhone(long phone) { 
+        validatePhone(phone); 
+        this.phone = phone; 
+    }
+    
+    @Override
+    public void setCountry(String country) { 
+        validateString(country, "country"); 
+        this.country = country; 
+    }
 
+    @Override
     public String getFullname() { return firstname + " " + lastname; }
+    
+    @Override
     public String generateFullPhone() { return "+" + countryPhoneCode + " " + phone; }
+    
+    @Override
     public int calculateAge() { return Period.between(birthDate, LocalDate.now()).getYears(); }
+    
+    @Override
     public int getNumFlights() { return flights.size(); }
 
     // Prototype

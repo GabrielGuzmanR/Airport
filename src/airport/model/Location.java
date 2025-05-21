@@ -2,7 +2,7 @@ package airport.model;
 
 import java.util.Objects;
 
-public class Location implements Cloneable {
+public class Location implements InterLocation, Cloneable {
     private final String airportId;
     private String airportName;
     private String airportCity;
@@ -56,18 +56,53 @@ public class Location implements Cloneable {
         }
     }
 
+    @Override
     public String getAirportId() { return airportId; }
+    
+    @Override
     public String getAirportName() { return airportName; }
+    
+    @Override
     public String getAirportCity() { return airportCity; }
+    
+    @Override
     public String getAirportCountry() { return airportCountry; }
+    
+    @Override
     public double getAirportLatitude() { return airportLatitude; }
+    
+    @Override
     public double getAirportLongitude() { return airportLongitude; }
     
-    public void setAirportName(String name) { validateString(name, "name"); this.airportName = name; }
-    public void setAirportCity(String city) { validateString(city, "city"); this.airportCity = city; }
-    public void setAirportCountry(String country) { validateString(country, "country"); this.airportCountry = country; }
-    public void setAirportLatitude(double lat) { validateLatitude(lat); this.airportLatitude = lat; }
-    public void setAirportLongitude(double lon) { validateLongitude(lon); this.airportLongitude = lon; }
+    @Override
+    public void setAirportName(String name) { 
+        validateString(name, "name"); 
+        this.airportName = name; 
+    }
+    
+    @Override
+    public void setAirportCity(String city) { 
+        validateString(city, "city"); 
+        this.airportCity = city; 
+    }
+    
+    @Override
+    public void setAirportCountry(String country) { 
+        validateString(country, "country"); 
+        this.airportCountry = country; 
+    }
+    
+    @Override
+    public void setAirportLatitude(double lat) { 
+        validateLatitude(lat); 
+        this.airportLatitude = lat; 
+    }
+    
+    @Override
+    public void setAirportLongitude(double lon) { 
+        validateLongitude(lon); 
+        this.airportLongitude = lon; 
+    }
 
     // Prototype Pattern
     @Override
