@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package airport;
+package airport.view;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import airport.model.Flight;
+import airport.model.Location;
+import airport.model.Passenger;
+import airport.model.Plane;
 
 /**
  *
@@ -97,8 +101,8 @@ public class AirportFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound1 = new airport.PanelRound();
-        panelRound2 = new airport.PanelRound();
+        panelRound1 = new org.netbeans.modules.form.InvalidComponent();
+        panelRound2 = new org.netbeans.modules.form.InvalidComponent();
         jButton13 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -235,24 +239,12 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         jComboBox8 = new javax.swing.JComboBox<>();
         jButton7 = new javax.swing.JButton();
-        panelRound3 = new airport.PanelRound();
+        panelRound3 = new org.netbeans.modules.form.InvalidComponent();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        panelRound1.setRadius(40);
         panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panelRound2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                panelRound2MouseDragged(evt);
-            }
-        });
-        panelRound2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                panelRound2MousePressed(evt);
-            }
-        });
 
         jButton13.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jButton13.setText("X");
@@ -805,6 +797,11 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel38.setText("Last Name:");
 
         jTextField23.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        jTextField23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField23ActionPerformed(evt);
+            }
+        });
 
         jLabel39.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel39.setText("Birthdate:");
@@ -889,7 +886,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(507, 507, 507)
                         .addComponent(jButton1)))
-                .addContainerGap(555, Short.MAX_VALUE))
+                .addContainerGap(586, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -928,6 +925,10 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(113, 113, 113))
         );
 
+        jTextField20.getAccessibleContext().setAccessibleName("IDtxt");
+        jTextField22.getAccessibleContext().setAccessibleName("FirstNametxt");
+        jTextField23.getAccessibleContext().setAccessibleName("LastNametxt");
+
         jTabbedPane1.addTab("Update info", jPanel5);
 
         jTextField28.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
@@ -963,7 +964,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(829, Short.MAX_VALUE))
+                .addContainerGap(860, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1033,7 +1034,7 @@ public class AirportFrame extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(269, 269, 269)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addContainerGap(322, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
@@ -1097,7 +1098,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1157,7 +1158,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(521, 521, 521)
                         .addComponent(jButton4)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1216,7 +1217,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(145, 145, 145)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1275,7 +1276,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(226, 226, 226)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1332,7 +1333,7 @@ public class AirportFrame extends javax.swing.JFrame {
                             .addComponent(jLabel46))
                         .addGap(79, 79, 79)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox6, 0, 105, Short.MAX_VALUE)
+                            .addComponent(jComboBox6, 0, 136, Short.MAX_VALUE)
                             .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(820, 820, 820))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
@@ -1824,9 +1825,9 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private airport.PanelRound panelRound1;
-    private airport.PanelRound panelRound2;
-    private airport.PanelRound panelRound3;
+    private org.netbeans.modules.form.InvalidComponent panelRound1;
+    private org.netbeans.modules.form.InvalidComponent panelRound2;
+    private org.netbeans.modules.form.InvalidComponent panelRound3;
     private javax.swing.JRadioButton user;
     private javax.swing.JComboBox<String> userSelect;
     // End of variables declaration//GEN-END:variables
