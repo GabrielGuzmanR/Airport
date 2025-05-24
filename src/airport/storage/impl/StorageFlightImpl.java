@@ -1,6 +1,8 @@
-package airport.storage;
+package airport.storage.impl;
 
 import airport.model.Flight;
+import airport.storage.interfaces.StorageFlight;
+
 import java.util.ArrayList;
 import java.util.List;
 

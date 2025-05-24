@@ -1,2 +1,5 @@
-/build/
 /dist/
+/build/
+
+*.clas
+/nbproject/private/

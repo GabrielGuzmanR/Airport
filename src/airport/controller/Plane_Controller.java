@@ -1,48 +1,43 @@
 package airport.controller;
 
 import airport.model.Plane;
-import airport.storage.StoragePlane;
+import airport.service.PlaneService;
+import airport.controller.interfaces.PlaneControllerInterface;
 
 import java.util.List;
 
-public class Plane_Controller {
-    private final StoragePlane storage;
+public class Plane_Controller implements PlaneControllerInterface {
 
-    public Plane_Controller(StoragePlane storage) {
-        this.storage = storage;
+    private final PlaneService planeService;
+
+    public Plane_Controller(PlaneService planeService) {
+        this.planeService = planeService;
     }
 
-    public void createPlane(String id, String brand, String model, int maxCapacity, String airline) {
-        if (storage.existsPlane(id)) {
-            throw new IllegalArgumentException("Ya existe un avión con ese ID.");
-        }
-        Plane plane = new Plane(id, brand, model, maxCapacity, airline);
-        storage.addPlane(plane);
+    @Override
+    public Plane createPlane(String id, String brand, String model, int maxCapacity, String airline) {
+        this.planeService.createPlane(id, brand, model, maxCapacity, airline);
+        return this.planeService.getPlane(id);
     }
 
+    @Override
     public Plane getPlane(String id) {
-        Plane plane = storage.getPlaneById(id);
-        if (plane == null) {
-            throw new IllegalArgumentException("El avión con el ID especificado no existe.");
-        }
-        return plane;
+        return this.planeService.getPlane(id);
     }
 
+    @Override
     public List<Plane> getAllPlanes() {
-        return storage.getAllPlanes();
+        return this.planeService.getAllPlanes();
     }
 
-    public void updatePlane(Plane updated) {
-        if (!storage.existsPlane(updated.getId())) {
-            throw new IllegalArgumentException("El avión con el ID especificado no existe.");
-        }
-        storage.updatePlane(updated);
+    @Override
+    public Plane updatePlane(Plane updated) {
+        this.planeService.updatePlane(updated);
+        return updated;
     }
 
+    @Override
     public void removePlane(String id) {
-        if (!storage.existsPlane(id)) {
-            throw new IllegalArgumentException("El avión con el ID especificado no existe.");
-        }
-        storage.removePlane(id);
+        this.planeService.removePlane(id);
     }
 }

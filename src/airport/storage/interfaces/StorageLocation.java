@@ -1,4 +1,4 @@
-package airport.storage;
+package airport.storage.interfaces;
 
 import airport.model.Location;
 import java.util.List;

@@ -5,9 +5,6 @@ import airport.service.validator.interfaces.ValidatorInterface;
 
 public class LocationValidator implements ValidatorInterface<Location> {
 
-    public LocationValidator() {
-    }
-
     @Override
     public void validate(Location location) {
         validateId(location.getAirportId());
@@ -34,7 +31,8 @@ public class LocationValidator implements ValidatorInterface<Location> {
         if (lat < -90 || lat > 90) {
             throw new IllegalArgumentException("Airport latitude must be in range [-90, 90]");
         }
-        if (String.valueOf(Math.abs(lat)).contains(".") && String.valueOf(lat).split("\\.")[1].length() > 4) {
+        String[] split = String.valueOf(lat).split("\\.");
+        if (split.length > 1 && split[1].length() > 4) {
             throw new IllegalArgumentException("Airport latitude must have at most 4 decimal places");
         }
     }
@@ -43,9 +41,9 @@ public class LocationValidator implements ValidatorInterface<Location> {
         if (lon < -180 || lon > 180) {
             throw new IllegalArgumentException("Airport longitude must be in range [-180, 180]");
         }
-        if (String.valueOf(Math.abs(lon)).contains(".") && String.valueOf(lon).split("\\.")[1].length() > 4) {
+        String[] split = String.valueOf(lon).split("\\.");
+        if (split.length > 1 && split[1].length() > 4) {
             throw new IllegalArgumentException("Airport longitude must have at most 4 decimal places");
         }
     }
-
 }

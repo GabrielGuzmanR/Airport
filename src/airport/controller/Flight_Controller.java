@@ -1,47 +1,42 @@
 package airport.controller;
 
+import airport.controller.interfaces.FlightControllerInterface;
 import airport.model.Flight;
-import airport.storage.StorageFlight;
+import airport.service.FlightService;
 
 import java.util.List;
 
-public class Flight_Controller {
-    private final StorageFlight storage;
+public class Flight_Controller implements FlightControllerInterface {
+    private final FlightService flightService;
 
-    public Flight_Controller(StorageFlight storage) {
-        this.storage = storage;
+    public Flight_Controller(FlightService flightService) {
+        this.flightService = flightService;
     }
 
-    public void createFlight(Flight flight) {
-        if (storage.existsFlight(flight.getId())) {
-            throw new IllegalArgumentException("Ya existe un vuelo con ese ID.");
-        }
-        storage.addFlight(flight);
-    }
-
-    public Flight getFlight(String id) {
-        Flight flight = storage.getFlightById(id);
-        if (flight == null) {
-            throw new IllegalArgumentException("El vuelo con el ID especificado no existe.");
-        }
+    @Override
+    public Flight createFlight(Flight flight) {
+        this.flightService.createFlight(flight);
         return flight;
     }
 
+    @Override
+    public Flight getFlight(String id) {
+        return this.flightService.getFlight(id);
+    }
+
+    @Override
     public List<Flight> getAllFlights() {
-        return storage.getAllFlights();
+        return this.flightService.getAllFlights();
     }
 
-    public void updateFlight(Flight updated) {
-        if (!storage.existsFlight(updated.getId())) {
-            throw new IllegalArgumentException("El vuelo con el ID especificado no existe.");
-        }
-        storage.updateFlight(updated);
+    @Override
+    public Flight updateFlight(Flight updated) {
+        this.flightService.updateFlight(updated);
+        return updated;
     }
 
+    @Override
     public void removeFlight(String id) {
-        if (!storage.existsFlight(id)) {
-            throw new IllegalArgumentException("El vuelo con el ID especificado no existe.");
-        }
-        storage.removeFlight(id);
+        this.flightService.removeFlight(id);
     }
 }

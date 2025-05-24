@@ -14,11 +14,13 @@ public class FlightValidator implements ValidatorInterface<Flight> {
         validateNotNull(flight.getDepartureDate(), "Departure date");
         validateDuration(flight.getHoursDurationArrival(), flight.getMinutesDurationArrival(), "flight duration");
 
-        if (flight.getScaleLocation() == null
-                && (flight.getHoursDurationScale() != 0 || flight.getMinutesDurationScale() != 0))
-            throw new IllegalArgumentException("If scale location is null, scale time must be 0");
-        if (flight.getScaleLocation() != null)
+        if (flight.getScaleLocation() == null) {
+            if (flight.getHoursDurationScale() != 0 || flight.getMinutesDurationScale() != 0)
+                throw new IllegalArgumentException("If scale location is null, scale time must be 0");
+        } else {
+            validateNotNull(flight.getScaleLocation(), "Scale location");
             validateDuration(flight.getHoursDurationScale(), flight.getMinutesDurationScale(), "scale duration");
+        }
     }
 
     private void validateId(String id) {
