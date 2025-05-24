@@ -1,4 +1,4 @@
-package airport.controller.storage;
+package airport.storage;
 
 import airport.model.Flight;
 import java.util.ArrayList;

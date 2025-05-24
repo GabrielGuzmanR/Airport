@@ -13,11 +13,6 @@ public class Plane implements Cloneable {
     private ArrayList<Flight> flights;
 
     public Plane(String id, String brand, String model, int maxCapacity, String airline) {
-        validateId(id);
-        validateString(brand, "brand");
-        validateString(model, "model");
-        validateCapacity(maxCapacity);
-        validateString(airline, "airline");
 
         this.id = id;
         this.brand = brand;
@@ -27,56 +22,53 @@ public class Plane implements Cloneable {
         this.flights = new ArrayList<>();
     }
 
-    private void validateId(String id) {
-        if (id == null || !id.matches("^[A-Z]{2}\\d{5}$")) {
-            throw new IllegalArgumentException("Plane id must match format XXYYYYY (2 uppercase letters + 5 digits)");
-        }
-    }
-
-    private void validateString(String s, String field) {
-        if (s == null || s.trim().isEmpty()) {
-            throw new IllegalArgumentException("Plane " + field + " cannot be empty");
-        }
-    }
-
-    private void validateCapacity(int capacity) {
-        if (capacity <= 0) {
-            throw new IllegalArgumentException("Plane capacity must be greater than 0");
-        }
-    }
-
-    public void addFlight(Flight flight) {
-        if (flight == null) throw new IllegalArgumentException("Flight cannot be null");
-        if (!flights.contains(flight)) {
-            flights.add(flight);
-        }
-    }
-
     public String getId() {
         return id;
     }
+
     public String getBrand() {
         return brand;
     }
+
     public String getModel() {
         return model;
     }
+
     public int getMaxCapacity() {
         return maxCapacity;
     }
+
     public String getAirline() {
         return airline;
     }
+
     public ArrayList<Flight> getFlights() {
         return new ArrayList<>(flights);
     }
+
     public int getNumFlights() {
         return flights.size();
     }
 
-    public void setBrand(String brand) { validateString(brand, "brand"); this.brand = brand; }
-    public void setModel(String model) { validateString(model, "model"); this.model = model; }
-    public void setAirline(String airline) { validateString(airline, "airline"); this.airline = airline; }
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
+    }
+
+    public void addFlight(Flight flight) {
+        if (flight == null)
+            throw new IllegalArgumentException("Flight cannot be null");
+        if (!flights.contains(flight)) {
+            flights.add(flight);
+        }
+    }
 
     // Prototype Pattern: shallow copy of flights list
     @Override
@@ -93,8 +85,10 @@ public class Plane implements Cloneable {
     // equals & hashCode for inclusion and uniqueness
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Plane)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Plane))
+            return false;
         Plane plane = (Plane) o;
         return id.equals(plane.id);
     }

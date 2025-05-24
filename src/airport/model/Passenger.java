@@ -15,14 +15,8 @@ public class Passenger implements Cloneable {
     private String country;
     private ArrayList<Flight> flights;
 
-    public Passenger(long id, String firstname, String lastname, LocalDate birthDate, int countryPhoneCode, long phone, String country) {
-        validateId(id);
-        validateString(firstname, "firstname");
-        validateString(lastname, "lastname");
-        validateBirthDate(birthDate);
-        validateCountryPhoneCode(countryPhoneCode);
-        validatePhone(phone);
-        validateString(country, "country");
+    public Passenger(long id, String firstname, String lastname, LocalDate birthDate, int countryPhoneCode, long phone,
+            String country) {
 
         this.id = id;
         this.firstname = firstname;
@@ -35,66 +29,93 @@ public class Passenger implements Cloneable {
     }
 
     public void addFlight(Flight flight) {
-        if (flight == null) throw new IllegalArgumentException("Flight cannot be null");
+        if (flight == null)
+            throw new IllegalArgumentException("Flight cannot be null");
         if (!flights.contains(flight)) {
             flights.add(flight);
         }
     }
 
-    // Validations
-    private void validateId(long id) {
-        if (id < 0 || String.valueOf(id).length() > 15)
-            throw new IllegalArgumentException("Passenger id must be >= 0 and at most 15 digits");
-    }
-
-    private void validateString(String s, String field) {
-        if (s == null || s.trim().isEmpty())
-            throw new IllegalArgumentException("Passenger " + field + " cannot be empty");
-    }
-
-    private void validateBirthDate(LocalDate date) {
-        if (date == null || date.isAfter(LocalDate.now()))
-            throw new IllegalArgumentException("Invalid birth date");
-    }
-
-    private void validateCountryPhoneCode(int code) {
-        if (code < 0 || String.valueOf(code).length() > 3)
-            throw new IllegalArgumentException("Country phone code must be >= 0 and at most 3 digits");
-    }
-
-    private void validatePhone(long phone) {
-        if (phone < 0 || String.valueOf(phone).length() > 11)
-            throw new IllegalArgumentException("Phone must be >= 0 and at most 11 digits");
-    }
-
     // Getters & setters with validation
-    public long getId() { return id; }
-    public String getFirstname() { return firstname; }
-    public String getLastname() { return lastname; }
-    public LocalDate getBirthDate() { return birthDate; }
-    public int getCountryPhoneCode() { return countryPhoneCode; }
-    public long getPhone() { return phone; }
-    public String getCountry() { return country; }
-    public ArrayList<Flight> getFlights() { return new ArrayList<>(flights); }
+    public long getId() {
+        return id;
+    }
 
-    public void setFirstname(String firstname) { validateString(firstname, "firstname"); this.firstname = firstname; }
-    public void setLastname(String lastname) { validateString(lastname, "lastname"); this.lastname = lastname; }
-    public void setBirthDate(LocalDate birthDate) { validateBirthDate(birthDate); this.birthDate = birthDate; }
-    public void setCountryPhoneCode(int countryPhoneCode) { validateCountryPhoneCode(countryPhoneCode); this.countryPhoneCode = countryPhoneCode; }
-    public void setPhone(long phone) { validatePhone(phone); this.phone = phone; }
-    public void setCountry(String country) { validateString(country, "country"); this.country = country; }
+    public String getFirstname() {
+        return firstname;
+    }
 
-    public String getFullname() { return firstname + " " + lastname; }
-    public String generateFullPhone() { return "+" + countryPhoneCode + " " + phone; }
-    public int calculateAge() { return Period.between(birthDate, LocalDate.now()).getYears(); }
-    public int getNumFlights() { return flights.size(); }
+    public String getLastname() {
+        return lastname;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public int getCountryPhoneCode() {
+        return countryPhoneCode;
+    }
+
+    public long getPhone() {
+        return phone;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public ArrayList<Flight> getFlights() {
+        return new ArrayList<>(flights);
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setCountryPhoneCode(int countryPhoneCode) {
+        this.countryPhoneCode = countryPhoneCode;
+    }
+
+    public void setPhone(long phone) {
+        this.phone = phone;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getFullname() {
+        return firstname + " " + lastname;
+    }
+
+    public String generateFullPhone() {
+        return "+" + countryPhoneCode + " " + phone;
+    }
+
+    public int calculateAge() {
+        return Period.between(birthDate, LocalDate.now()).getYears();
+    }
+
+    public int getNumFlights() {
+        return flights.size();
+    }
 
     // Prototype
     @Override
     public Passenger clone() {
         try {
             Passenger copy = (Passenger) super.clone();
-            // Shallow copy of flights: the list is new, but Flight objects inside are the same references.
+            // Shallow copy of flights: the list is new, but Flight objects inside are the
+            // same references.
             copy.flights = new ArrayList<>(this.flights);
             return copy;
         } catch (CloneNotSupportedException e) {
@@ -105,8 +126,10 @@ public class Passenger implements Cloneable {
     // equals & hashCode for checking uniqueness and flight inclusion
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Passenger)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Passenger))
+            return false;
         Passenger that = (Passenger) o;
         return id == that.id;
     }

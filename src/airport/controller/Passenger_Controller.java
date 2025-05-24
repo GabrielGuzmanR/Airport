@@ -1,7 +1,8 @@
 package airport.controller;
 
 import airport.model.Passenger;
-import airport.controller.storage.StoragePassenger;
+import airport.storage.StoragePassenger;
+
 import java.util.List;
 
 public class Passenger_Controller {
