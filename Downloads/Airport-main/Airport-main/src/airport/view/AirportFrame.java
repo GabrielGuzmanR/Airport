@@ -75,6 +75,13 @@ public class AirportFrame extends javax.swing.JFrame {
         cargarComboBoxLocations(ComboBoxLocation1);
         cargarComboBoxLocations(ComboBoxLocation2);
         cargarComboBoxLocations(ComboBoxLocation3);
+        
+        refreshLocationsTable();
+        new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        refreshLocationsTable();
+    }
+    }).start();
     }
 
     private void cargarComboBoxPasajeros() {
@@ -1889,25 +1896,27 @@ public class AirportFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al retrasar el vuelo: " + e.getMessage());
         }
     }
+    private void refreshLocationsTable() {
+    DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
+    model.setRowCount(0);
 
-    private void ShowAllLocationsRefreshBTNActionPerformed(java.awt.event.ActionEvent evt) {
-        DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
-        model.setRowCount(0);
-
-        Response<List<Location>> resp = controller.getAllLocations();
-        if (resp != null && resp.getStatus() == 200 && resp.getData() != null) {
-            for (Location location : resp.getData()) {
-                model.addRow(new Object[]{
-                    location.getAirportId(),
-                    location.getAirportName(),
-                    location.getAirportCity(),
-                    location.getAirportCountry()
-                });
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al obtener ubicaciones: "
-                    + (resp != null ? resp.getMessage() : "Respuesta nula del controlador."));
+    Response<List<Location>> resp = controller.getAllLocations();
+    if (resp != null && resp.getStatus() == 200 && resp.getData() != null) {
+        for (Location location : resp.getData()) {
+            model.addRow(new Object[]{
+                location.getAirportId(),
+                location.getAirportName(),
+                location.getAirportCity(),
+                location.getAirportCountry()
+            });
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "Error al obtener ubicaciones: "
+                + (resp != null ? resp.getMessage() : "Respuesta nula del controlador."));
+    }
+}
+    private void ShowAllLocationsRefreshBTNActionPerformed(java.awt.event.ActionEvent evt) {
+       refreshLocationsTable();
     }
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
