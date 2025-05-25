@@ -114,7 +114,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         panelRound1 = new airport.view.PanelRound();
         panelRound2 = new airport.view.PanelRound();
-        SalirBTN = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         user = new javax.swing.JRadioButton();
@@ -258,14 +258,14 @@ public class AirportFrame extends javax.swing.JFrame {
         panelRound1.setRadius(40);
         panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        SalirBTN.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        SalirBTN.setText("X");
-        SalirBTN.setBorderPainted(false);
-        SalirBTN.setContentAreaFilled(false);
-        SalirBTN.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        SalirBTN.addActionListener(new java.awt.event.ActionListener() {
+        jButton13.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        jButton13.setText("X");
+        jButton13.setBorderPainted(false);
+        jButton13.setContentAreaFilled(false);
+        jButton13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalirBTNActionPerformed(evt);
+                jButton13ActionPerformed(evt);
             }
         });
 
@@ -275,13 +275,13 @@ public class AirportFrame extends javax.swing.JFrame {
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound2Layout.createSequentialGroup()
                 .addContainerGap(1083, Short.MAX_VALUE)
-                .addComponent(SalirBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
         panelRound2Layout.setVerticalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound2Layout.createSequentialGroup()
-                .addComponent(SalirBTN)
+                .addComponent(jButton13)
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
@@ -1777,7 +1777,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(11, true);
     }
 
-    private void SalirBTNActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
     }
 
@@ -2017,10 +2017,10 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JButton RefreshFlightsBTN;
     private javax.swing.JButton RefreshPassengersBTN;
     private javax.swing.JButton RegisterPassenger;
-    private javax.swing.JButton SalirBTN;
     private javax.swing.JButton ShowAllLocationsRefreshBTN;
     private javax.swing.JButton UpdateInfo;
     private javax.swing.JRadioButton administrator;
+    private javax.swing.JButton jButton13;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
