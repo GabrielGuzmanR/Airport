@@ -12,6 +12,7 @@ import airport.service.loader.interfaces.DataLoaderInterface;
 
 public class LocationLoader implements DataLoaderInterface {
 
+    @Override
     public List<Location> load(String filePath) throws Exception {
         List<Location> locations = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
