@@ -10,6 +10,7 @@
 - **2252**
 
 ## Instrucciones para ejecutar el proyecto
+EN CASO DE ERRORES AL ABRIR EL AIRPORTFRAME:
 
 1. **Abre el proyecto en NetBeans.**
 2. Antes de ejecutar o depurar, selecciona:  

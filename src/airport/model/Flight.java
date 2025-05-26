@@ -146,4 +146,42 @@ public class Flight implements Cloneable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+
+    public void setArrivalLocation(Location arrivalLocation) {
+        this.arrivalLocation = arrivalLocation;
+    }
+
+    public void setDepartureLocation(Location departureLocation) {
+        this.departureLocation = departureLocation;
+    }
+
+    public void setHoursDurationArrival(int hoursDurationArrival) {
+        this.hoursDurationArrival = hoursDurationArrival;
+    }
+
+    public void setHoursDurationScale(int hoursDurationScale) {
+        this.hoursDurationScale = hoursDurationScale;
+    }
+
+    public void setMinutesDurationArrival(int minutesDurationArrival) {
+        this.minutesDurationArrival = minutesDurationArrival;
+    }
+
+    public void setMinutesDurationScale(int minutesDurationScale) {
+        this.minutesDurationScale = minutesDurationScale;
+    }
+
+    public void setPassengers(ArrayList<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+
+    public void setScaleLocation(Location scaleLocation) {
+        this.scaleLocation = scaleLocation;
+    }
+
+    
 }
