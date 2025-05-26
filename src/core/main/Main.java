@@ -6,6 +6,7 @@ package core.main;
 
 import airport.controller.impl.AirportController;
 import airport.controller.impl.Flight_Controller;
+import airport.controller.impl.InputValidator;
 import airport.controller.impl.Location_Controller;
 import airport.controller.impl.Passenger_Controller;
 import airport.controller.impl.Plane_Controller;
@@ -46,6 +47,7 @@ import java.util.List;
 import javax.swing.UIManager;
 
 public class Main {
+
     public static void main(String[] args) {
 
         System.setProperty("flatlaf.useNativeLibrary", "false");
@@ -84,18 +86,22 @@ public class Main {
         FlightControllerInterface flightController = new Flight_Controller(flightService);
         PlaneControllerInterface planeController = new Plane_Controller(planeService);
         PassengerControllerInterface passengerController = new Passenger_Controller(passengerService);
-
-        /** Se inyectan los controladores al servicio orquestadors **/
+        InputValidator IV = new InputValidator();
+        /**
+         * Se inyectan los controladores al servicio orquestadors *
+         */
         AirportService airportService = new AirportService(planeController,
                 flightController,
                 locationController,
                 passengerController);
 
-        /** Se inyecta el servicio al controlador principal **/
+        /**
+         * Se inyecta el servicio al controlador principal *
+         */
         AirportController controller = new AirportController(airportService);
 
         java.awt.EventQueue.invokeLater(() -> {
-            new AirportFrame(controller).setVisible(true);
+            new AirportFrame(controller,IV).setVisible(true);
         });
     }
 }
